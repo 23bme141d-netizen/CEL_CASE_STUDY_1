@@ -1,0 +1,37 @@
+clc;
+clear;
+close all;
+
+Vs = 8;
+
+R1 = 1000;
+R2 = 2200;
+R3 = 820;
+R4 = 220;
+R5 = 470;
+R6 = 330;
+
+A = [ (1/R2 + 1/R3 + 1/R4)   -1/R3                -1/R4;
+      -1/R3                  (1/R1 + 1/R3 + 1/R6) -1/R6;
+      -1/R4                  -1/R6                (1/R4 + 1/R5 + 1/R6) ];
+
+B = [ Vs/R2; Vs/R1; 0];
+
+V = A\B;
+
+V2 = V(1);
+V3 = V(2);
+V4 = V(3);
+
+fprintf('Node Voltages:\n');
+fprintf('V1 = %.3f V\n', Vs);
+fprintf('V2 = %.3f V\n', V2);
+fprintf('V3 = %.3f V\n', V3);
+fprintf('V4 = %.3f V\n', V4);
+
+figure;
+bar([Vs V(1) V(2) V(3)]);
+set(gca,'XTickLabel',{'V1','V2','V3','V4'});
+ylabel('Voltage (V)');
+title('Node Voltage Distribution using KCL');
+ylim([0 10]);
